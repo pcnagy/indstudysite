@@ -1,0 +1,123 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block page_content %} 
+
+<head>
+    <style>
+        .box {
+            width: 60vw;
+            margin-left: 18vw;
+            margin-right: 20vw;
+            margin-top: 20vh;
+            margin-bottom: 20vh;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 2vw 2vw black;
+            font-family: Arial;
+            display: inline-block;
+            justify-content: center;
+            overflow-x:unset;
+        }
+        .presentation_mode {
+            all: unset;
+            width: 5vw;
+            opacity: 0;
+            margin-left: 95vw;
+            text-indent: 0;
+            padding-top: 5px;
+            padding-left: 3px;
+            padding-right: 30px;
+            padding-bottom: 5px;
+            background-color: white;
+            border: 1px solid black;
+            font-family: Arial;
+            display: inline-block;
+            justify-content: center;
+            overflow-x:unset;
+        }
+        .box_title {
+            width: 60vw;
+            margin-left: 18vw;
+            margin-right: 20vw;
+            margin-top: 25vh;
+            margin-bottom: 20vh;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 80px;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 2vw 2vw black;
+            font-family: Arial;
+            display: inline-block;
+            justify-content: center;
+            overflow-x:unset;
+        }
+        .box h1 {
+            font-family: sans-serif;
+            font-size: 60px;
+        }
+        .box_title h1 {
+            font-family: sans-serif;
+            font-size: 60px;
+        }
+        .box_title p {
+            font-family: sans-serif;
+            margin-left: 20px;
+            font-size: 30px;
+        }
+        .box p {
+            font-family: sans-serif;
+            margin-left: 20px;
+            font-size: 20px;
+        }
+        .box img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<div class="wrapper">
+    <a href="/present" class="presentation_mode">
+        presentation mode
+    </a>
+    <div class="box_title">
+        <h1>Welcome to Finance Bro.</h1>
+        <p>A predictive modelling website created to be your bro in finance.</p>
+    </div>
+    <div class="box">
+        <h1>...and more.</h1>
+        <p>
+            With the growing use of Machine Learning, it is more important than ever for everyone to have a base understanding 
+            of how the technology works. Finance Bro serves as an example of how we can present Machine Learning
+            in a way that makes it understandable not just to those who have studied machine learning. 
+        </p>
+    </div>
+    <div class="box">
+        <h1>What is a Neural Network? Why do we use them?</h1>
+        <p>The human brain does a really good job of thinking, specifically drawing patterns
+            and making generalizations. Neural Networks attempt to recreate this process
+            through an algorithm that mimics the activity of our brain
+        </p>
+    </div>
+    <div class="box">
+        <img src="{% static 'dnn.webp' %}"/>
+    </div>
+    <div class="box">
+        <h1>"Much of current machine learning research has lost its connection to problems of import to the larger world of science and society"</h1>
+        <p>
+            -Kiri Wagstaff, Machine Learning that matters.
+        </p>
+        <p>
+            Where other research fails, Finance Bro succeeds. Though the goal is education, the statistical findings come from 
+            real data that is relevant in our larger world
+        </p>
+    </div>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block page_content %} 
+
+<head>
+    <style>
+        .box {
+            width: 60vw;
+            margin-left: 18vw;
+            margin-right: 20vw;
+            margin-top: 20vh;
+            margin-bottom: 20vh;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 2vw 2vw black;
+            font-family: Arial;
+            display: inline-block;
+            justify-content: center;
+            overflow-x:unset;
+        }
+        .presentation_mode {
+            all: unset;
+            width: 4.3vw;
+            margin-left: 90vw;
+            margin-top: 10vh;
+            text-indent: 0;
+            padding-top: 5px;
+            padding-left: 3px;
+            padding-right: 30px;
+            padding-bottom: 5px;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 2px 2px black;
+            font-family: Arial;
+            display: inline-block;
+            justify-content: center;
+            overflow-x:unset;
+            position: absolute;
+        }
+        .box_title {
+            width: 60vw;
+            margin-left: 18vw;
+            margin-right: 20vw;
+            margin-top: 25vh;
+            margin-bottom: 20vh;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 80px;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 2vw 2vw black;
+            font-family: Arial;
+            display: inline-block;
+            justify-content: center;
+            overflow-x:unset;
+        }
+        .box h1 {
+            font-family: sans-serif;
+            font-size: 60px;
+        }
+        .box_title h1 {
+            font-family: sans-serif;
+            font-size: 60px;
+        }
+        .box_title p {
+            font-family: sans-serif;
+            margin-left: 20px;
+            font-size: 30px;
+        }
+        .box p {
+            font-family: sans-serif;
+            margin-left: 20px;
+            font-size: 20px;
+        }
+        .box img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<div class="wrapper">
+    <div class="box_title">
+        <h1>Welcome to Finance Bro.</h1>
+    </div>
+    <div class="box">
+        <h1>...and more.</h1>
+    </div>
+    <div class="box">
+        <h1>What is a Neural Network? Why do we use them?</h1>
+    </div>
+    <div class="box">
+        <img src="{% static 'dnn.webp' %}"/>
+    </div>
+    <div class="box">
+        <h1>"Much of current machine learning research has lost its connection to problems of import to the larger world of science and society"</h1>
+    </div>
+    
+</div>
+
+{% endblock %}

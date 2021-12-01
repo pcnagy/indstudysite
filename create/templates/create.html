@@ -1,0 +1,428 @@
+{% extends "base.html" %} 
+
+{% block page_content %} 
+
+<head>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js" charset="utf-8"></script>
+
+    <script type="text/babel">
+        class MakeModel extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    num_layers: 0, 
+                    layer_sizes: [],
+                    loss: null,
+                    optimizer: null,
+                    learning_rate: null,
+                    decay: null,
+                    momentum: null,
+                    epochs: null,
+                    url: null,
+                };
+            }
+            
+            makeLink() {
+                var link = "";
+                link += this.state.epochs
+                link += '~'
+                link += this.state.num_layers;
+                this.state.layer_sizes.forEach(value => link += "layer" + value)
+                link += "~end~"
+                link += "loss" + this.state.loss;
+                link += "optimizer" + this.state.optimizer;
+                if (this.state.learning_rate) {
+                    link += "learning_rate" + this.state.learning_rate
+                }
+                if (this.state.decay) {
+                    link += "decay" + this.state.decay
+                }
+                if (this.state.momentum) {
+                    link += "momentum" + this.state.momentum
+                }
+                this.setState({
+                    url: link,
+                })
+            }
+
+            handleSizeChange = (val, event) => {
+                const add = event.target.value
+                console.log(event.target.value)
+                this.setState((prevState, props) => ({
+                    layer_sizes: [...prevState.layer_sizes.splice(0, val), add, ...prevState.layer_sizes.splice(val+1)]
+                }));
+            }
+            onEpochValChange = (event) => {
+                this.setState({
+                    epochs: event.target.value
+                })
+            }
+            onLossValChange = (event) => {
+                this.setState({
+                    loss: event.target.value
+                });
+            }
+            onLRChange = (event) => {
+                this.setState({
+                    learning_rate: event.target.value
+                });
+            }
+            onDChange = (event) => {
+                this.setState({
+                    decay: event.target.value
+                });
+            }
+            onMChange = (event) => {
+                this.setState({
+                    momentum: event.target.value
+                });
+            }
+
+            onOptValChange = (event) => {
+                this.setState({
+                    optimizer: event.target.value,
+                    learning_rate: null,
+                    decay: null,
+                    momentum: null,
+                });
+            }
+
+            moreLayers() {
+                this.setState((prevState, props) => ({
+                    num_layers: prevState.num_layers+1,
+                    layer_sizes: [...this.state.layer_sizes, 0],
+                }));
+            }
+            lessLayers() {
+                console.log('clicked')
+                if (this.state.num_layers > 0) {
+                    this.setState((prevState, props) => ({
+                    num_layers: prevState.num_layers-1,
+                    layer_sizes: prevState.layer_sizes.slice(0, prevState.layer_sizes.length - 1),
+                    }));
+                }
+                
+            }
+        
+            render() {
+                const divStyle = {
+                    width: '60vw',
+                    marginLeft: '18vw',
+                    marginRight: '20vw',
+                    marginTop: '10vw',
+                    paddingBottom: '20px',
+                    marginBottom: '20vh',
+                    paddingLeft: '30px',
+                    paddingRight: '30px',
+                    textIndent: 0,
+                    backgroundColor: 'white',
+                    border: '1px solid black',
+                    boxShadow: '2vw 2vw black',
+                    fontFamily: 'Arial',
+                    display: 'inline-block',
+                    justifyContent: 'center',
+                    overflowX:'unset',
+                }
+                const layerStyle = {
+                    marginLeft: '18vw',
+                    marginRight: '20vw',
+                    marginTop: '5px',
+                    marginBottom: '1px',
+                    padding: '30px',
+                    textIndent: 0,
+                    backgroundColor: 'white',
+                    border: '1px solid black',
+                    boxShadow: '3px 3px black',
+                    fontFamily: 'Arial',
+                    display: 'inline-block',
+                    justifyContent: 'center',
+                    overflowX:'unset',
+                }
+                const lossStyle = {
+                    minWidth: '15vw',
+                    marginLeft: '18vw',
+                    marginRight: '20vw',
+                    marginTop: '5px',
+                    marginBottom: '1px',
+                    padding: '40px',
+                    textIndent: 0,
+                    backgroundColor: 'white',
+                    border: '1px solid black',
+                    boxShadow: '3px 3px black',
+                    display: 'flex',
+                    flexDirection: "column",
+                    fontFamily: 'Arial',
+                    alignItems: 'center',
+                }
+                const showModel = {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }
+                const endStyle = {
+                    marginBottom: '20vh'
+                }
+                const addRemoveStyle = {
+                    marginTop: '30px',
+                    all: 'unset',
+                    border: '3px solid black',
+                    padding: '10px',
+                    margin: '5px'
+                }
+                const buttons = {
+                    display: 'flex',
+                    flexDirection: 'row',
+                }
+                const button = {
+                    width: 'auto',
+                    maxHeight: '50px',
+                    color: 'white',
+                    background: 'black',
+                    border: '1px solid black',
+                    marginTop: '40px',
+                    marginLeft: '20px',
+                    padding: '20px'
+                }
+                return (
+                    <div>
+                        <div className="makeModel" style={divStyle}>
+                            <h1>Build your network:</h1>
+                            <button onClick={()=>this.moreLayers()} style={addRemoveStyle}>add a layer</button>
+                            <button onClick={()=>this.lessLayers()} style={addRemoveStyle}>remove a layer</button>
+                            {this.state.layer_sizes.length > 0 &&
+                            <div>
+                                <h2>Select a size for each layer</h2>
+                                {Array.apply(null, Array(this.state.num_layers)).map(function (x, i) { return i; }).map((val) => (
+                                    <div>
+                                        <p>Layer {val} size</p>
+                                        <input
+                                        type="range"
+                                        onChange={(e) => this.handleSizeChange(val, e)}
+                                        value={this.state.layer_sizes[val]}
+                                        min="1"
+                                        max="300"
+                                        step="1"/>
+                                    </div>
+                                ))}
+                            
+                            </div>}
+
+                            <h2>Select a loss function:</h2>
+                            <div>
+                                <input 
+                                    type="radio" 
+                                    id="lms" 
+                                    name="loss" 
+                                    value="LMS" 
+                                    checked={this.state.loss=='LMS'} 
+                                    onChange={this.onLossValChange}/>
+                                <label for="LMS">Loss Mean Squared</label><br/>
+                                <input 
+                                    type="radio" 
+                                    id="lam" 
+                                    name="loss" 
+                                    value="LAM" 
+                                    checked={this.state.loss=='LAM'} 
+                                    onChange={this.onLossValChange}/>
+                                <label for="LMA">Loss Absolute Mean</label><br/>
+                            </div>
+                            <h2>Select an optimizer:</h2>
+                            <input 
+                                    type="radio" 
+                                    id="adagrad" 
+                                    name="optimizer" 
+                                    value="ADAGRAD" 
+                                    checked={this.state.optimizer=='ADAGRAD'} 
+                                    onChange={this.onOptValChange}/>
+                            <label for="adagrad">Adaptive Gradient</label><br/>
+                            <input 
+                                    type="radio" 
+                                    id="rms" 
+                                    name="optimizer" 
+                                    value="RMSPROP" 
+                                    checked={this.state.optimizer=='RMSPROP'} 
+                                    onChange={this.onOptValChange}/>
+                            <label for="rmsprop">Root mean square propegation</label><br/>
+                            <input type="radio" 
+                                    id="sgd" 
+                                    name="optimizer" 
+                                    value="SGD" 
+                                    checked={this.state.optimizer=='SGD'} 
+                                    onChange={this.onOptValChange}/>
+                            <label for="sgd">Stochastic gradient descent</label><br/>
+                            <input 
+                                    type="radio" 
+                                    id="adam" 
+                                    name="optimizer" 
+                                    value="ADAM" 
+                                    checked={this.state.optimizer=='ADAM'} 
+                                    onChange={this.onOptValChange}/>
+                            <label for="adam">Adaptive momentum</label><br/>
+                            <div>
+                                <div>
+                                <h2>How many rounds of training do you want?</h2>
+                                <p>Recommended is 10000</p>
+                                <input
+                                type="range"
+                                onChange={this.onEpochValChange}
+                                value={this.state.epochs}
+                                min="1"
+                                max="15000"
+                                step="1"/>
+                            </div>
+                            </div>
+                            {this.state.optimizer=='SGD' &&
+                            <div>
+                            <h2>Pick your settings for the Stochastic Gradient Descent optimizer</h2>
+                                <p>Suggested learning rate is 1, suggested decay is 0.001, and suggested momentum is 0.9</p>
+                                <p>learning rate: <input type='number' name='learning_rate' onChange={this.onLRChange}/></p>
+                                <p>decay: <input type='number' name='decay' onChange={this.onDChange}/></p>
+                                <p>momentum: <input type='number' name='momentum' onChange={this.onMChange}/></p>
+                            </div>
+                            }
+                            {this.state.optimizer=='ADAGRAD' &&
+                            <div>
+                            <h2>Pick your settings for the Adaptive Gradient optimizer</h2>
+                                <p>Suggested learning rate is 1 and suggested decay is 0.0001</p>
+                                <p>learning rate: <input type='number' name='learning_rate' onChange={this.onLRChange}/></p>
+                                <p>decay: <input type='number' name='decay' onChange={this.onDChange}/></p>
+                            </div>
+                            }
+                            {this.state.optimizer=='RMSPROP' &&
+                            <div>
+                            <h2>Pick your settings for the Root Mean Square optimizer</h2>
+                                <p>Suggested learning rate is 0.02 and suggested decay is 0.00001</p>
+                                <p>learning rate: <input type='number' name='learning_rate' onChange={this.onLRChange}/></p>
+                                <p>decay: <input type='number' name='decay' onChange={this.onDChange}/></p>
+                            </div>
+                            }
+                            {this.state.optimizer=='ADAM' &&
+                            <div>
+                            <h2>Pick your settings for the Adaptive Momentum optimizer</h2>
+                                <p>Suggested learning rate is 0.0001 and suggested decay is 0.0001</p>
+                                <p>learning rate: <input type='number' name='learning_rate' onChange={this.onLRChange}/></p>
+                                <p>decay: <input type='number' name='decay' onChange={this.onDChange}/></p>
+                            
+                            </div>
+                        }
+                        {this.state.optimizer && this.state.loss && Math.min(...this.state.layer_sizes) > 0 && this.state.epochs &&
+
+                        <div>
+                            {this.state.optimizer == 'ADAM' && this.state.learning_rate && this.state.decay &&
+                            <div style={buttons}>
+                                <button style={button} onClick={this.makeLink.bind(this)}>Set Network</button>
+                                {this.state.url &&
+                                    <form action={this.state.url}>
+                                        <button style={button} type="submit">Submit</button>
+                                    </form>
+                                }
+                            </div>
+                            }
+                            {this.state.optimizer == 'RMSPROP' && this.state.learning_rate && this.state.decay &&
+                            <div style={buttons}>
+                                <button style={button} onClick={this.makeLink.bind(this)}>Set Network</button>
+                                {this.state.url &&
+                                    <form action={this.state.url}>
+                                        <button style={button} type="submit">Submit</button>
+                                    </form>
+                                }
+                            </div>
+                            }
+                            {this.state.optimizer == 'ADAGRAD' && this.state.learning_rate && this.state.decay &&
+                            <div style={buttons}>
+                                <button style={button} onClick={this.makeLink.bind(this)}>Set Network</button>
+                                {this.state.url &&
+                                    <form action={this.state.url}>
+                                        <button style={button} type="submit">Submit</button>
+                                    </form>
+                                }
+                            </div>
+                            }
+                            {this.state.optimizer == 'SGD' && this.state.learning_rate && this.state.decay && this.state.momentum &&
+                            <div style={buttons}>
+                                <button style={button} onClick={this.makeLink.bind(this)}>Set Network</button>
+                                {this.state.url &&
+                                    <form action={this.state.url}>
+                                        <button style={button} type="submit">Submit</button>
+                                    </form>
+                                }
+                            </div>
+                            }
+
+                        </div>
+                        }
+                        </div>
+                        <div style={showModel}>
+                            {Array.apply(null, Array(this.state.num_layers)).map(function (x, i) { return i; }).map((val) => (
+                                <div style={layerStyle}>
+                                    Layer {val + 1} has {this.state.layer_sizes[val]} neurons
+                                </div>
+                            ))}
+                            {this.state.loss &&
+                                <div style={lossStyle}>
+                                    <p>Loss: {this.state.loss}</p>
+                                </div>
+                            }
+                            {this.state.optimizer &&
+                                <div style={lossStyle}>
+                                    {this.state.optimizer}  
+                                    {this.state.learning_rate &&
+                                        <span>learning rate: {this.state.learning_rate}</span>
+                                    }
+                                    {this.state.decay &&
+                                        <span>decay: {this.state.decay}</span>
+                                    }
+                                    {this.state.momentum &&
+                                        <span>momentum: {this.state.momentum}</span>
+                                    }
+                                </div>
+                            }
+                            
+                        </div>
+                        <div style={endStyle}>
+                            
+                        </div>
+                    </div>
+                    )
+                /*
+                let question = null;
+                if (this.state.correct === null) {
+                    question = <div>
+                        <button onClick={() => this.answer(false)}>a) A graph database query language</button>
+                        <button onClick={() => this.answer(true)}>b) An API query language</button>
+                        <button onClick={() => this.answer(false)}>c) A graph drawing API</button>
+                    </div>;
+                }
+                let answer = null;
+                if (this.state.correct === true) {
+                    answer = <div className="correct">Correct! It is an API query language</div>;
+                } else if (this.state.correct === false) {
+                    answer = <div className="incorrect">Nope! It's actually an API query language</div>;
+                }
+                
+                return <div className="quiz">
+                    <p>What is GraphQL?</p>
+                    {question}
+                    {answer}
+                </div>;
+                */
+            }
+        }
+        ReactDOM.render(
+            <MakeModel />,
+            document.getElementById('root')
+        );
+        </script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+
+
+{% endblock %}

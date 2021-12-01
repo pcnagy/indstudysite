@@ -1,0 +1,182 @@
+{% extends "base.html" %} 
+{% load static %}
+
+
+
+{% block page_content %} 
+<head>
+    <script src="https://kit.fontawesome.com/0eb20bc924.js" crossorigin="anonymous"></script>
+    <style>
+        .info_container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap; 
+            flex-direction: row;
+        }
+        .box_big {
+            margin-left: 24vw; 
+            margin-top: 10vh;
+            padding: 5vw;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 10px 10px black;
+            display: inline-block;
+            width: 40vw;
+            justify-content: center;
+        }
+        .box_big {
+            margin-left: 24vw; 
+            margin-top: 10vh;
+            margin-bottom: 5vh;
+            padding: 5vw;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 10px 10px black;
+            width: 40vw;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+        }
+        .box_last {
+            margin-left: 24vw; 
+            margin-top: 10vh;
+            margin-bottom: 10vh;
+            padding: 5vw;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 10px 10px black;
+            width: 40vw;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+        }
+        .article {
+            all: unset;
+        }
+        .article:hover {
+            color:rgb(51, 167, 206);
+        }
+        .box30_link {
+            margin: 10px; 
+            padding-left: 10px;
+            padding-top: 4px;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 10px 10px black;
+            display: inline-block;
+            min-width: 15%;
+            max-width: 23%;
+            justify-content: center;
+        }.box_news {
+            margin: 10px; 
+            padding: 10px;
+            text-indent: 0;
+            background-color: white;
+            border: 1px solid black; 
+            box-shadow: 10px 10px black;
+            display: inline-block;
+            width: 20%;
+            justify-content: center;
+        }
+        .box_news a {
+            all: unset;
+            text-decoration: underline;
+        }
+        .box30 p {
+            align-items: center;
+        }
+        .box30_link a {
+            all: unset;
+        }
+        .related_container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: left;
+        }
+        .related_header {
+            color: white;
+            font-style: italic;
+            font-weight: lighter;
+            font-size: 30;
+            justify-self: center;
+            text-shadow: 2px 2px rgb(163, 170, 207);
+            margin: 20px;
+        }
+        .input_bar {
+            all: unset;
+            margin-top: 10px;
+            font-size: 14px;
+            float: left;
+            width: 80%;
+            height: 20px; 
+            background: white;
+            color: black;
+        }
+        .input_button {
+            all: unset;
+            margin-top: 10px;
+            float: left;
+            width: 20%;
+            height: 20px; 
+            background: white;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+        .wrapper {
+            padding: 5px;
+        }
+        .form_input {
+            margin-left:.5vw;
+            margin-top: .75vh;
+            width: 30vw;
+            height: 3.5vh;
+            border: 1px solid black;
+            float: left; 
+            position: relative;
+        }
+        .input_button {
+            height: 36px;
+            width: 6vw;
+            background-color: black;
+            margin-left: 10px;
+            color: white;
+            border: none;
+            z-index: 1;
+            position: relative;
+        }
+    </style>
+</head>
+<div class="wrapper">
+    <div class="box_big">
+        <h1>{{pred}}</h1>
+        <p>{{info.description}}</p>
+        <p>{{info.sentence}}</p>
+        <p>{{info.location}}</p>
+    </div> 
+    {% if news %} 
+    <div class="box_big">
+        <h1>Articles from the web.</h1>
+        {% for item in news %}
+            <a class="article" href={{item.url}}>-{{item.title}}</a>
+            <p></p>
+        {% endfor %}
+    </div>
+    <div class="box_last">
+        <h1>SEARCH FOR ANOTHER STOCK</h1>
+        <form action=/stocks action='get'>
+            <input class ="form_input" type="search" id="" name="ticker">
+        </form>
+    </div>
+    {% endif %}
+        
+
+    <div class="box_end">
+        <p>.</p>
+    </div>
+</div>
+
+{% endblock %}

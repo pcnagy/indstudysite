@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+
+<head>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+        .mt {
+            height: 60px; 
+            width: 100%;
+            background-color: rgb(43 31 141);
+            font-family: sans-serif;
+            display: inline-block;
+            color:whitesmoke;
+            font-size: 30px;
+            padding-top: 15px; 
+            align-items: center;
+        }
+        .mt h3 {
+            all: unset;
+            display: inline; 
+            float: left;
+            margin-left: 10px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            margin-left: 20px;
+            overflow-y: scroll;
+        }
+        .box {
+            background-color: white;
+            margin-left: 7vw; 
+            margin-bottom: 8px;
+            margin-top: 8px;
+            padding: 5px;
+            text-indent: 0;
+            border: 1px solid black; 
+            box-shadow: 5px 5px black;
+            font-family: Arial;
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: center;
+            width: 80vw;
+        }
+        .box img {
+            width: 80px; 
+            height: auto;
+        }
+        .box a {
+            all: unset;
+            margin-left: 30px;
+            color: rgb(88, 102, 230);
+            font-family: Arial;
+            font-style: italic;
+            font-weight: lighter;
+            font-size: 20;
+            margin: 20px;
+        }
+        .header {
+            padding-top: 10px;
+        }
+        .header  h1{
+            all: unset;
+            margin-left: 30px;
+            margin-top: 50px;
+            color: rgb(88, 102, 230);
+            font-family: Arial;
+            font-weight: lighter;
+            font-size: 50;
+            margin: 20px;
+            padding-bottom: 50px;
+        }
+    </style>
+</head>
+<div class="wrapper">
+    <div class="container">
+        {% for data in best %}
+            <div class="box">
+                <img src={{data.logo}} />
+                <a href='../stocks/?ticker={{data.ticker}}'>{{data.name}}, {{data.industry}}</a>
+            </div>
+            
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

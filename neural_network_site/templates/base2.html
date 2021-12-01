@@ -1,0 +1,67 @@
+
+{% load static %}
+
+<head>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0; 
+        }
+        .bg{
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background-size: 1500px;
+            background-image: url("{% static 'lines.jpg' %}");
+            background-position: center;
+        }
+        .navbar {
+            position: fixed;
+            height: 60px;
+            width: 100%;
+        }
+        .navbar ul {
+            list-style-type: none;
+            margin: 0; 
+            padding: 0;
+            overflow: hidden; 
+            opacity: 100%;
+        }
+        .navbar ul li {
+            float: left;
+            opacity: 100%;
+        }
+        .navbar ul li a {
+            font-size: 30;
+            font-family: sans-serif;
+            display: block;
+            padding: 10px 30px;
+            height:20px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            opacity: 100%;
+        }
+        .navbar ul li a:hover{
+            background-color: red;
+        }
+        .main {
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+
+
+<div class="bg">
+    <div class="navbar">
+        <ul>
+            <li><a href="#">one</a></li>
+            <li><a href="#">one</a></li>
+            <li><a href="#">one</a></li>
+        </ul>
+    </div>
+    <div class="main">
+        {% block page_content %}{% endblock %}
+    </div>
+</div>

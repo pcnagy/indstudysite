@@ -1,0 +1,84 @@
+{% load static %}
+
+<head>
+  <script src="https://kit.fontawesome.com/0eb20bc924.js" crossorigin="anonymous"></script>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin-left: 0;
+      margin-top: 0;
+    }
+    .barnav {
+      width: 100%;
+      height: 60px; 
+      font-family: sans-serif;
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      background-color: white;
+      overflow-y: hidden;
+      display: inline;
+      align-items: center;
+    }
+    .barnav h1 {
+      float: left;
+      font-weight: 400;
+      font-family: 'Proxima Nova';
+      color: black;
+      align-self: left;
+      font-size: 60px;
+      margin-left: 15px;
+      margin-top: -5px; 
+    }
+    .barnav a {
+      font-family: sans-serif;
+      padding-top: 23px;
+      padding-right: 50px;
+      text-decoration: dashed;
+      font-size: 20px;
+      color: black;
+      font-size: 16px;
+      display: block;
+      float: right;
+    }
+    .barnav img {
+      position: absoulte;
+      max-width: 212px;
+      padding-left: 20px;
+      padding-top: 10px;
+    }
+    @keyframes color-change {
+      from {
+        background-color: white;
+      }
+      to {
+        background-color: rgb(40, 215, 221);
+      }
+    }
+    .sidenav a:hover {
+      animation-name: color-change;
+      animation-duration: .5s;
+      background-color: rgb(40, 215, 221);
+    }
+    .main {
+      margin-top: 60px;
+      height: 100%;
+      background: rgb(0,255,249);
+      background: linear-gradient(90deg, rgba(125,250,146,1) 0%, rgba(125,221,233,1) 100%);
+      overflow-y: scroll;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<div class="barnav">
+  <img src="{% static 'FinanceBro.png' %}"/>
+    <a href="/"><i class="fas fa-home"></i>  Home</a>
+    <a href="/stocks"><i class="fas fa-chart-line"></i>  Stocks</a>
+    <a href="/predictions"><i class="fas fa-flask"></i>  Predictions</a>
+    <a href='/create'><i class = "far fa-plus-square"></i>  Create</a>
+
+</div>
+
+
+<div class="main">{% block page_content %}{% endblock %}</div>
