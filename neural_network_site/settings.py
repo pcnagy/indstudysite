@@ -39,7 +39,7 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://indstudysite-90139bb2216e.herokuapp.com/']
 
 
 # Application definition
