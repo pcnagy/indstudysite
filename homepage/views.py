@@ -11,3 +11,8 @@ def homepagepm(request):
 
     }
     return render(request, 'homepagepm.html', context)
+
+from django.http import HttpResponse
+
+def test_view(request):
+    return HttpResponse("Hello, this is a test view!")
