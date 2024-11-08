@@ -25,7 +25,18 @@ SECRET_KEY = 'django-insecure-*upf@@(@s+-z5ng3rngr1yp8uu+kxcf!_8l5=^-%kr4l&vga^@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# In settings.py
+STATICFILES_DIRS = []
+
+import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
+STATIC_URL = '/static/'
 
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
