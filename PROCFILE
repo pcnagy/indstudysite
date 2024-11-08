@@ -1,1 +1,1 @@
-web: gunicorn indstudysite.wsgi --log-file -
+web: gunicorn neural_network_site.wsgi --log-file -
