@@ -28,6 +28,8 @@ DEBUG = False
 # In settings.py
 STATICFILES_DIRS = []
 
+SECURE_SSL_REDIRECT = False
+
 import os
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
