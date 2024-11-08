@@ -82,10 +82,18 @@
 </head>
 <div class="wrapper">
     <div class="container">
+        <div>
+            <h>WARNING: THIS DATA IS OUT OF DATE</h>
+            <p>previosly, this would have pulled up to date the top 10 stocks according to the model and the relevant information.
+                However, I am no longer paying for the API as the scope of the project has passed so I am pulling from the last 
+                time that I ran this with access to the API
+            </p>
+        </div>
         {% for data in best %}
             <div class="box">
-                <img src={{data.logo}} />
-                <a href='../stocks/?ticker={{data.ticker}}'>{{data.name}}, {{data.industry}}</a>
+                <h>{{data.ticker}}</h>
+                <!-- <img src={{data.logo}} /> -->
+                <!-- <a href='../stocks/?ticker={{data.ticker}}'>{{data.name}}, {{data.industry}}</a> -->
             </div>
             
         {% endfor %}

@@ -134,31 +134,19 @@ def stocks(request):
             percentile = "None"
 
         ti = request.GET['ticker'].upper()
-        tiurl = f"https://api.polygon.io/v1/meta/symbols/{ti}/company?apiKey=2ckUQrRRwUoyMS6pdg5LlYxLIIe75den"
+        tiurl = f"https://api.polygon.io/v3/reference/tickers/{ti}?apiKey=2ckUQrRRwUoyMS6pdg5LlYxLIIe75den"
         tir = requests.get(tiurl)
         tidata = tir.json()
+        
 
         try:
-            info_sentence = ""
-            if tidata['ceo']:
-                info_sentence += f"{tidata['name']}'s CEO is {tidata['ceo']}. "
-            if tidata['sector'] and tidata['industry']:
-                info_sentence += f"{tidata['name']} is in the {tidata['industry']} of the {tidata['sector']}. "
 
-            location = f"{tidata['name']} is based out of {tidata['hq_state']}, {tidata['hq_country']}"
-
-
-            similar = tidata['similar']
-            if len(similar) > 10:
-                similar = similar[:10]
-
+            tidata = tidata['results']
             tidict = {
                 'name': tidata['name'],
-                'sentence': info_sentence,
+                'ticker':ti,
                 'description': tidata['description'],
-                'logo': tidata['logo'],
-                'similar': similar,
-                'location': location,
+                'location': 'location: ' + tidata['locale'].upper(),
             }
 
             nurl = f"https://api.polygon.io/v2/reference/news?ticker={ti}&apiKey=2ckUQrRRwUoyMS6pdg5LlYxLIIe75den"
@@ -198,7 +186,7 @@ def stocks(request):
                 "news": news
             }
             return render(request, 'stock_detail.html', context)
-        except:
+        except Exception as e:
             return render(request, 'not_found.html', {})
     return render(request, 'stocks.html', context)
 
@@ -229,8 +217,6 @@ def stock_detail(request, ticker):
     model.finalize()
     model.load_parameters('parameters.txt')
 
-    specific = f'https://api.polygon.io/vX/reference/financials?ticker={ticker.upper()}' + api_key
-    r = requests.get(specific)
     data = r.json()
 
     data = data['results'][0]

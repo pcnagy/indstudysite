@@ -21,6 +21,8 @@ def predictions(request):
         li = np.array(li)
         changes.append(li)
 
+
+
     training_data = np.array(training_data)
     changes = np.array(changes)
     maxes = []
@@ -62,6 +64,7 @@ def predictions(request):
     model.add(NN.Layer_Dense(n, 1))
     model.add(NN.Activation_Linear())
 
+
     model.set(
         Loss=NN.Loss_MeanSquaredError(),
         optimizer=NN.Optimizer_Adam(learning_rate=.0001, decay=.00001),
@@ -91,22 +94,29 @@ def predictions(request):
 
     best_tickers = []
 
+
     for j in best:  
         for index, i in enumerate(data):
             if index == j:
                 ti = i 
                 tiurl = f'https://api.polygon.io/v1/meta/symbols/{i}/company?apiKey=2ckUQrRRwUoyMS6pdg5LlYxLIIe75den'
-                tir = requests.get(tiurl)
-                tidata = tir.json()
+                # tir = requests.get(tiurl)
+                tidata = data[i]
                 tidict = {
                     'ticker': ti,
-                    'name': tidata['name'],
-                    'sector': tidata['sector'],
-                    'logo': tidata['logo'],
-                    'industry': tidata['industry'],
-                    'ceo': tidata['ceo']
+                    #'name': tidata['name'],
+                    'name': 'test',
+                    # 'sector': tidata['sector'],
+                    'sector' : 'sector',
+                    # 'logo': tidata['logo'],
+                    'logo' : 'logo',
+                    # 'industry': tidata['industry'],
+                    'industry' : 'industry',
+                    # 'ceo': tidata['ceo']
+                    'ceo' : 'ceo',
                 }
                 best_tickers.append(tidict)
+
 
 
 
